@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
-    public interface IProductDal:IEntityRepository<Product> //IproductDal IEntityRepositoryi product için yapılandırdı. 
+    public interface ICategoryDal:IEntityRepository<Category>
     {
-        
+         
     }
 }
