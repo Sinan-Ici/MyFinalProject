@@ -1,4 +1,4 @@
-﻿using Entites.Abstract;
+﻿using Core.Entites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,12 +6,13 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataAccess.Abstract
+namespace Core.DataAccess
 {
     //generic constraint
     //class : referans tip 
     //IEntiyt: IEntity olabilir veya IENtity implemenete eden bir nesne olabilir.
     //new (): newlenebilri olmalı
+    //core katmanında mantık istediğimiz katmanı burda ayrı ayrı implemente edebilmektir. farklı porojelerde kullanmak için core katmanı kullanırız. 
 
     public interface IEntityRepository<T> where T:class,IEntity,new()
     {
