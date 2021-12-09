@@ -10,7 +10,7 @@ namespace Core.DataAccess
 {
     //generic constraint
     //class : referans tip 
-    //IEntiyt: IEntity olabilir veya IENtity implemenete eden bir nesne olabilir.
+    //IEntiyt: IEntity olabilir veya IEntity implemenete eden bir nesne olabilir.
     //new (): newlenebilri olmalı
     //core katmanında mantık istediğimiz katmanı burda ayrı ayrı implemente edebilmektir. farklı porojelerde kullanmak için core katmanı kullanırız. 
 

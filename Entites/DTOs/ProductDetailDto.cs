@@ -10,6 +10,7 @@ namespace Entites.DTOs
 {
     public class ProductDetailDto:IDto
     {
+        //Data transformaiton object-Taşınacak objeler
         public int ProductId { get; set; }
         public string ProductName { get; set; }
         public string CategoryName { get; set; }
