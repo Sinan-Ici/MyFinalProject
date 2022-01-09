@@ -1,4 +1,5 @@
-﻿using Entites.Concrete;
+﻿using Core.Utilities.Results;
+using Entites.Concrete;
 using Entites.DTOs;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,12 @@ namespace Business.Abstract
 {
     public interface IProductService
     {
-        List<Product> GetAll();
-        List<Product> GetAllByCategoryId(int id);//category id sine göre getir.
-        List<Product> GetByUnitPrice(decimal min, decimal max);
-        List<ProductDetailDto> GetProducDetails();
-
+        IDataResult<List<Product>> GetAll();
+        IDataResult<List<ProductDetailDto>> GetProductDetails();
+        IDataResult<List<Product>> GetAllByCategoryId(int id);//category id sine göre getir.
+        IDataResult<List<Product>> GetByUnitPrice(decimal min, decimal max);//mesajları, hata mesajları ekleyebilmnek için idatareult kullandık
+        IDataResult<Product> GetById(int productId);
+        IResult Add(Product product);//burada data yok o yuzde idata result demedik
+            
     }
 }
