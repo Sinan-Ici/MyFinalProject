@@ -17,6 +17,8 @@ namespace Business.Abstract
         IDataResult<List<Product>> GetByUnitPrice(decimal min, decimal max);//mesajları, hata mesajları ekleyebilmnek için idatareult kullandık
         IDataResult<Product> GetById(int productId);
         IResult Add(Product product);//burada data yok o yuzde idata result demedik
+        IResult Update(Product product);
+
             
     }
 }
