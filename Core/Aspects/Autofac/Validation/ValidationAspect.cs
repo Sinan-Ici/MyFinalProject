@@ -13,7 +13,9 @@ namespace Core.Aspects.Autofac.Validation
     public class ValidationAspect : MethodInterception
     {
         private Type _validatorType;
-        public ValidationAspect(Type validatorType)
+        public ValidationAspect
+            
+            (Type validatorType)
         {
             if (!typeof(IValidator).IsAssignableFrom(validatorType))//Eğere göderilen validator type eğer bi Ivalidator değilse kız.
             {
