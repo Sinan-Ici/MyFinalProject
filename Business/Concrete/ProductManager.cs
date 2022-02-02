@@ -1,7 +1,11 @@
 ﻿using Business.Abstract;
+using Business.BusinessAspects.Autofac;
 using Business.CCS;
 using Business.Constans;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Performance;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.UtiliErrories.Results;
@@ -30,7 +34,9 @@ namespace Business.Concrete
             _productDal = productDal;
             _categoryService = categoryService;
         }
+        [SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(ProductValidator))]//Add meodunu doğrula productValidator kullanark.(Add metodunu doğrula productValidator dAki kurallara göre.
+        [CacheRemoveAspect("IProductService.Get")]//Update metodunda açıklaması yapıldı.
         public IResult Add(Product product)
         {
             IResult result=  BusinessRules.Run(CheckIfProductCountOfCategoryCorrect(product.CategoryId), CheckifTheProductNamesExists(product.ProductName),CheckIFCategoryLimitExceded());
@@ -38,8 +44,10 @@ namespace Business.Concrete
 
             return new SuccessResult(Messages.ProductAdded); 
         }
-
-        public IDataResult<List<Product>> GetAll()        {
+        [CacheAspect]
+        [PerformanceAspect(5)]
+        public IDataResult<List<Product>> GetAll()        
+        {
             //if (DateTime.Now.Hour == 14)
             //{
             //    return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
@@ -53,7 +61,7 @@ namespace Business.Concrete
         {
             return _productDal.GetAll(p=>p.CategoryId==id);
         }
-
+        [CacheAspect]
         public Product GetById(int productId)
         {
             return _productDal.Get(p=>p.ProductId==productId);
@@ -74,7 +82,7 @@ namespace Business.Concrete
             
             return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetails());    
         }
-
+        [CacheRemoveAspect("IProductService.Get")]//Update işlemi yaparken daha önce cache içine kaydettiğimiz veriyi silmemiz gerekiyor çünkü artık güncel veri değil bu nedenle IProdctservice teki Get metodunu için kayıtta kalan cache verisini bu metod çalışırken temizle demiş olduk.0
         public IResult Update(Product product)
         {
             throw new NotImplementedException();
@@ -117,7 +125,18 @@ namespace Business.Concrete
             }
             return new SuccessResult();
         }
+        [TransactionScopeAspect]
+        public IResult AddTransactionalTest(Product product)
+        {
+            Add(product);
+            if (product.UnitPrice < 10)
+            {
+                throw new Exception("");
+            }
 
+            Add(product);
 
+            return null;
+        }
     }
 }           
