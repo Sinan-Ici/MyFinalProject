@@ -53,7 +53,7 @@ namespace Business.Concrete
             //    return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
             //}
             //return new SuccessDataResult<List<Product>>(_productDal.GetAll(), Messages.ProductListed);
-            return new SuccessDataResult<List<Product>>(_productDal.GetAll());
+            return new SuccessDataResult<List<Product>>(_productDal.GetAll(), Messages.ProductListed);
             
         }
 
